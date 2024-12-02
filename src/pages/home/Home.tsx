@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 
 import useAuth from "@/lib/auth";
-import supabase, { handleAuthStateChange, signInGoogle } from "@/lib/supabase";
+import supabase, { handleAuthStateChange } from "@/lib/supabase";
 import { Navigate } from "react-router";
+import GoogleSignInButton from "@/components/originui/GoogleSignInButton";
 
 export default function App() {
 	const { user, setUser, fetchUser, signOut } = useAuth();
@@ -24,9 +25,8 @@ export default function App() {
 	}
 
 	return (
-		<div>
-			<h1>Please sign in</h1>
-			<button onClick={signInGoogle}>Sign in with Google</button>
+		<div className="w-screen h-screen grid place-items-center">
+			<GoogleSignInButton />
 		</div>
 	);
 }

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { AuthError, User } from "@supabase/supabase-js";
-import { Exit, Option } from "effect";
+import { Cause, Exit, Option } from "effect";
 
 import logger from "@/lib/logger";
 import supabase from "@/lib/supabase";
@@ -19,7 +19,10 @@ const useAuth = create<AuthState>((set) => ({
 
 	fetchUser: async () => {
 		const user = await fetchUser();
-		Option.map(user, (user) => set({ user }));
+		Option.match(user, {
+			onNone: () => signOutUser(),
+			onSome: (user) => set({ user }),
+		});
 	},
 
 	signOut: async () => {
@@ -35,19 +38,21 @@ export default useAuth;
 
 async function fetchUser(): Promise<Option.Option<User>> {
 	const { data, error } = await supabase.auth.getUser();
-	if (error) {
-		logger.error(error, "error when fetching user");
-		return Option.none();
+
+	if (data.user) {
+		logger.info(data.user, "user fetched");
+		return Option.some(data.user);
 	}
-	logger.info(data.user, "user fetched");
-	return Option.some(data.user);
+
+	logger.error(error, "error when fetching user");
+	return Option.none();
 }
 
-async function signOutUser(): Promise<Exit.Exit<{}, AuthError>> {
+async function signOutUser(): Promise<Exit.Exit<Cause.Cause<Cause.Empty>, AuthError>> {
 	const { error } = await supabase.auth.signOut();
 	if (error) {
 		logger.error(error, "error when signing out user");
 		return Exit.fail(error);
 	}
-	return Exit.succeed({});
+	return Exit.succeed(Cause.empty);
 }

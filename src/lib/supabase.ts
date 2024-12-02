@@ -1,7 +1,7 @@
 import env from "@/env/env";
 import logger from "@/lib/logger";
 import { AuthChangeEvent, createClient, OAuthResponse, Session } from "@supabase/supabase-js";
-import { AuthState } from "./auth";
+import { AuthState } from "@/lib/auth";
 
 const supabaseProjectUrl = env.VITE_SUPABASE_PROJECT_URL;
 const supabaseApiKey = env.VITE_SUPABASE_API_KEY;
@@ -36,7 +36,6 @@ export async function handleAuthStateChange(
 }
 
 function siteUrl(): string {
-	logger.info(import.meta.env.VITE_DEV_SERVER_URL);
 	const url: string = env.NEXT_PUBLIC_VERCEL_URL ?? `http://localhost:${env.VITE_PORT}/`;
 	const prefixFormat = url.startsWith("http") ? url : `https://${url}`;
 	const trailingFormat = url.endsWith("/") ? prefixFormat : `${prefixFormat}/`;
