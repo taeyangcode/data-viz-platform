@@ -2,17 +2,18 @@
 
 ## Setup Instructions
 
-[_Are you looking for development instructions? Click here._](#local-development-instructions)
+##### [_Are you looking for development instructions? Click here._](#local-development-instructions)
 
 ```bash
 # clone production branch
 $ git clone https://github.com/taeyangcode/data-viz-platform
-
-# initialize secrets from template
-$ cp .env.template .env
+$ cd data-viz-platform
 
 # install dependenices
 $ npm install
+
+# initialize secrets from template
+$ cp .env.template .env.local
 
 # build and preview local emulation of production
 $ npm run build
@@ -32,12 +33,13 @@ $ npm run preview
 ```bash
 # clone development branch
 $ git clone https://github.com/taeyangcode/data-viz-platform -b dev
-
-# initialize secrets from template
-$ cp .env.template .env
+$ cd data-viz-platform
 
 # install dependenices
 $ npm install
+
+# initialize secrets from template
+$ cp .env.template .env.local
 
 # start development server
 $ npm run dev
