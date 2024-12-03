@@ -48,7 +48,7 @@ export function AppSidebar() {
 							{sidebarItems.map((item) => (
 								<SidebarMenuItem key={item.title}>
 									<SidebarMenuButton
-										className={`flex aspect-square h-10 w-10 items-center justify-center p-4 ${activeItem === item.title && "bg-sidebar-accent text-sidebar-accent-foreground]"}`}
+										className={`flex aspect-square h-10 w-10 items-center justify-center p-4 ${activeItem === item.title && "bg-sidebar-accent text-sidebar-accent-foreground outline outline-1 outline-[#525252]"}`}
 										onClick={() => setActiveItem(item.title)}
 									>
 										<Link to={item.url}>
