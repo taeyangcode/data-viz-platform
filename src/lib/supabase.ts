@@ -36,7 +36,7 @@ export async function handleAuthStateChange(
 }
 
 function siteUrl(): string {
-	const url: string = env.NEXT_PUBLIC_VERCEL_URL ?? `http://localhost:${env.VITE_PORT}/`;
+	const url: string = env.VITE_VERCEL_URL || `http://localhost:${env.VITE_PORT}/`;
 	const prefixFormat = url.startsWith("http") ? url : `https://${url}`;
 	const trailingFormat = url.endsWith("/") ? prefixFormat : `${prefixFormat}/`;
 
