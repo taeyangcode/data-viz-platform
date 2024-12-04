@@ -1,12 +1,16 @@
 import { Input } from "@/components/ui/input";
 
-export default function SearchInput() {
+export interface SearchInputProps {
+	className?: string;
+}
+
+export default function SearchInput(props: SearchInputProps) {
 	return (
-		<div className="grid place-items-center space-y-2">
-			<div className="relative grid gap-x-5">
+		<div className="grid space-y-2">
+			<div className="relative grid place-items-center gap-x-5">
 				<Input
 					id="input-26"
-					className="peer bg-[#2C2E334D] pe-10 ps-10 text-[#EDEDED] placeholder:text-[#EDEDED]"
+					className={`peer bg-[#2C2E334D] pe-10 ps-10 text-[#EDEDED] placeholder:text-[#EDEDED] ${props.className}`}
 					placeholder="Search"
 					type="search"
 				/>

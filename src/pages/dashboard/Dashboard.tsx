@@ -2,14 +2,25 @@ import AuthGuard from "@/components/AuthGuard";
 import DashboardLayout from "@/pages/dashboard/DashboardLayout";
 import DashboardGraph from "@/pages/dashboard/DashboardGraph";
 import LightningBoltIcon from "@/assets/icon/LightningBolt";
-import { ChevronUpIcon, EllipsisIcon, HistoryIcon, PlusIcon, SparklesIcon, UploadIcon } from "lucide-react";
-import React, { MouseEventHandler } from "react";
+import {
+	ChevronUpIcon,
+	EllipsisIcon,
+	HistoryIcon,
+	PlusIcon,
+	RotateCwIcon,
+	SparklesIcon,
+	UploadIcon,
+	XIcon,
+} from "lucide-react";
+import React, { MouseEventHandler, useState } from "react";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
+import SearchInput from "@/components/search-input/SearchInput";
 
 export default function Dashboard() {
 	return (
 		<AuthGuard>
 			<DashboardLayout>
-				<div className="grid h-full grid-cols-12 grid-rows-[auto_auto_auto] place-content-between gap-x-4 p-10">
+				<div className="grid h-full grid-cols-12 grid-rows-[auto_auto_1fr] place-content-between gap-x-4 gap-y-8 p-8">
 					<div className="col-span-12 row-span-1">
 						<DashboardHeader title={"Charging Station"} />
 					</div>
@@ -35,6 +46,8 @@ interface DashboardHeaderProps {
 }
 
 function DashboardHeader({ title }: DashboardHeaderProps) {
+	const [editVariablesSlideOpen, setEditVariableSlideOpen] = useState<boolean>(false);
+
 	return (
 		<div className="flex w-full items-center justify-between">
 			<h1 className="flex items-center gap-x-4 text-[32px] font-bold text-white">
@@ -42,26 +55,57 @@ function DashboardHeader({ title }: DashboardHeaderProps) {
 				{title}
 			</h1>
 			<div className="flex items-center justify-evenly gap-x-4">
-				<DashboardHeaderButton content={<HistoryIcon size={22} stroke="#B9B9B9" />} />
-				<DashboardHeaderButton content={<span className="text-white">Edit Variables</span>} />
-				<DashboardHeaderButton content={<UploadIcon size={22} stroke="#B9B9B9" />} />
+				<DashboardHeaderButton>
+					<HistoryIcon size={22} stroke="#B9B9B9" />
+				</DashboardHeaderButton>
+				<Sheet open={editVariablesSlideOpen}>
+					<DashboardHeaderButton onClick={(_) => setEditVariableSlideOpen(!editVariablesSlideOpen)}>
+						<span className="text-white">Edit Variables</span>
+					</DashboardHeaderButton>
+					<SheetContent className="min-w-[800px] border-none bg-[#0E0D0D] outline outline-2 outline-[#525252]">
+						<div className="flex h-full w-full flex-col gap-y-8 p-6">
+							<div className="flex flex-row items-center justify-between">
+								<span className="text-2xl font-medium text-white">Edit Variables</span>
+								<button onClick={() => setEditVariableSlideOpen(!editVariablesSlideOpen)}>
+									<XIcon size={24} stroke="#FFFFFF" />
+								</button>
+							</div>
+							<div className="grid grid-flow-col grid-cols-4 gap-x-8">
+								<div className="col-span-2">
+									<SearchInput className="rounded border-none outline outline-1 outline-[#5A5A5A]" />
+								</div>
+								<button className="flex flex-row items-center justify-center gap-x-2 rounded bg-[#242424] px-4 py-2 outline outline-1 outline-[#5A5A5A]">
+									<SparklesIcon size={18} fill="#B9B9B9" stroke="#B9B9B9" />
+									<span className="text-[16px] font-normal text-white">Autofill</span>
+								</button>
+								<button className="flex flex-row items-center justify-center gap-x-2 rounded bg-[#23291E] px-4 py-2 outline outline-1 outline-[#C8E972]">
+									<RotateCwIcon size={18} stroke="#C9FF3B" />
+									<span className="text-[16px] font-normal text-[#C9FF3B]">Rerun</span>
+								</button>
+							</div>
+						</div>
+					</SheetContent>
+				</Sheet>
+				<DashboardHeaderButton>
+					<UploadIcon size={22} stroke="#B9B9B9" />
+				</DashboardHeaderButton>
 			</div>
 		</div>
 	);
 }
 
 interface DashboardHeaderButtonProps {
-	content: React.ReactNode;
 	onClick?: MouseEventHandler<HTMLButtonElement>;
+	children?: React.ReactNode;
 }
 
-function DashboardHeaderButton({ content, onClick }: DashboardHeaderButtonProps) {
+function DashboardHeaderButton({ children, onClick }: DashboardHeaderButtonProps) {
 	return (
 		<button
 			className="h-[41px] rounded bg-[#242424] px-3 py-2 outline outline-1 outline-[#5A5A5A]"
 			onClick={onClick}
 		>
-			{content}
+			{children}
 		</button>
 	);
 }
@@ -109,7 +153,7 @@ function DashboardPerformance() {
 					<PlusIcon size={24} fill="#FCFCFC" />
 				</button>
 			</div>
-			<div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-6">
+			<div className="grid grid-cols-2 grid-rows-2 gap-6">
 				<DashboardPerformanceInfo
 					title="Infrastructure Units"
 					description="This describes variable two and what the shown data means."
@@ -145,10 +189,10 @@ function DashboardPerformanceInfo(props: DashboardPerformanceInfoProps) {
 	const { title, description, indicator } = props;
 
 	return (
-		<div className="flex aspect-square w-full flex-col justify-between rounded bg-[#222324] p-6 outline outline-1 outline-[#525252]">
+		<div className="flex aspect-square flex-col justify-between rounded bg-[#222324] p-4 outline outline-1 outline-[#525252]">
 			<div className="flex h-fit w-full flex-col gap-4">
 				<span className="text-lg font-medium text-white">{title}</span>
-				<span className="text-[12px] font-light text-[#BBBBBB]">{description}</span>
+				<span className="text-sm font-light text-[#BBBBBB]">{description}</span>
 			</div>
 			<div className="flex items-end justify-end">
 				<span className="text-3xl font-bold text-white">{indicator}</span>

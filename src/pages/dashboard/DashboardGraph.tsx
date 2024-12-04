@@ -21,14 +21,24 @@ export default function DashboardGraph() {
 					<CartesianGrid vertical={false} />
 					<XAxis
 						dataKey="month"
+						tick={{ fontWeight: 500, stroke: "#fff", fontSize: "16px" }}
 						tickLine
 						axisLine
-						tickMargin={8}
+						tickMargin={30}
+						height={80}
 						tickFormatter={(value) => value.slice(0, 3)}
 					/>
-					<YAxis dataKey="price" />
+					<YAxis
+						dataKey="price"
+						axisLine
+						tickLine
+						tick={{ fontWeight: 500, stroke: "#fff", fontSize: "16px" }}
+						tickMargin={30}
+						width={80}
+						tickFormatter={(value) => `$${value}k`}
+					/>
 					<ChartTooltip
-						cursor={{ stroke: "#C8E972", strokeDasharray: "3 3" }}
+						cursor={{ stroke: "#FFF", strokeWidth: 2, strokeOpacity: 100 }}
 						content={({ payload }) => {
 							return (
 								<GraphTooltip
