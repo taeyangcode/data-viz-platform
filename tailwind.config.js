@@ -1,3 +1,5 @@
+import tailwindcssAnimate from "tailwindcss-animate";
+
 /** @type {import('tailwindcss').Config} */
 export default {
 	darkMode: ["selector", "class"],
@@ -66,5 +68,5 @@ export default {
 			serif: ["Roobert", "sans-serif"],
 		},
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [tailwindcssAnimate],
 };
