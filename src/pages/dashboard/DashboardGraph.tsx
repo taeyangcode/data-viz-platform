@@ -97,7 +97,7 @@ function GraphTooltip(props: GraphTooltipProps) {
 	const { price, description } = props;
 
 	return (
-		<div className="flex min-w-[160px] scale-95 flex-col justify-between gap-y-4 rounded p-5 opacity-0 outline outline-1 outline-[#525252] backdrop-blur-lg transition-all duration-300 ease-in-out hover:scale-100 hover:opacity-100">
+		<div className="flex min-w-[160px] scale-95 flex-col justify-between gap-y-4 rounded p-5 outline outline-1 outline-[#525252] backdrop-blur-lg">
 			<div className="flex flex-row items-center justify-between">
 				<span className="text-[20px] font-extrabold text-white">{`$${price.toFixed(2)}k`}</span>
 				<CircleHelpIcon size={16} stroke="#888888" />
