@@ -4,18 +4,20 @@ import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
 export default function DashboardGraph() {
 	return (
-		<div className="flex h-full flex-col justify-center gap-y-6">
+		<div className="flex h-full w-full flex-col justify-center gap-y-6">
 			<span className="text-2xl font-semibold text-[#FDFDFDFD]">Graphs</span>
 			<ChartContainer
 				config={chartConfig}
-				className="h-full min-h-[200px] max-w-full rounded bg-[#222324] p-4 outline outline-1 outline-[#525252]"
+				className="h-full min-h-[200px] rounded bg-[#222324] p-8 outline outline-1 outline-[#525252]"
 			>
 				<LineChart
 					accessibilityLayer
 					data={chartData}
 					margin={{
-						left: 12,
-						right: 12,
+						top: 12,
+						bottom: 12,
+						left: 30,
+						right: 30,
 					}}
 				>
 					<CartesianGrid vertical={false} />
@@ -34,7 +36,6 @@ export default function DashboardGraph() {
 						tickLine
 						tick={{ fontWeight: 500, stroke: "#fff", fontSize: "16px" }}
 						tickMargin={30}
-						width={80}
 						tickFormatter={(value) => `$${value}k`}
 					/>
 					<ChartTooltip
@@ -96,7 +97,7 @@ function GraphTooltip(props: GraphTooltipProps) {
 	const { price, description } = props;
 
 	return (
-		<div className="flex min-w-[160px] flex-col justify-between gap-y-4 rounded p-5 outline outline-1 outline-[#525252] backdrop-blur-lg">
+		<div className="flex min-w-[160px] scale-95 flex-col justify-between gap-y-4 rounded p-5 opacity-0 outline outline-1 outline-[#525252] backdrop-blur-lg transition-all duration-300 ease-in-out hover:scale-100 hover:opacity-100">
 			<div className="flex flex-row items-center justify-between">
 				<span className="text-[20px] font-extrabold text-white">{`$${price.toFixed(2)}k`}</span>
 				<CircleHelpIcon size={16} stroke="#888888" />
